@@ -16,7 +16,7 @@ const double r = 0.5;
 const double tg60 = tan(60 * PI / 180);
 const double box_1 = 10;
 const double box_2 = 13.89244;
-const int n = 8;
+const int n = 32;
 
 
 
@@ -32,20 +32,22 @@ int main()
 
     double box_y = (sqrt(3) * box_2) / 2;//Находим координаты по оси Y точек верхней грани параллелограмма, паралельной оси X.
 
-    vector<pair<double, double>> vec = { {1.,1.},{3.,1.2},{4.,1.6},{5.,8.},{8.1,8.1},{10.,10.},{6.,10.},{6.5,5.5} };
+    vector<pair<double, double>> vec = { {1.,1.},{5.,0.5},{7.,0},{9.,0.5},{3.,2.1},{5.,2.5},{7.5,2.5},{10.,2.},{3.,4.},
+        {5.5,4.5},{9.,4.},{4.,6.},{7.,6.},{9.5,6.},{12.,5.},{6.,8.},{8.,9.},{10.,8.},{12.,9.},{13.,7.},{15.,9.},{7.,11.},{10.,11.},{14.,11.},
+        {7.5,4.5},{8.5,10.5},{12,10.5},{11.5,7},{8.,7.5},{11,4},{2.5,1},{10,9.5}
+    };
 
-    double Zero_distance_to_go = 18;
+    double Zero_distance_to_go = 12;
 
     srand(time(0));
 
     int cur_particle = rand() % n;//Случайным образом выбираем частицу, которая будет двигаться (n - кол-во частиц).
-
+    cur_particle = 9;
     double cur_particle_x = vec[cur_particle].first;
 
     double cur_particle_y = vec[cur_particle].second;//Записываем координаты частицы, которая будет двигаться. 
 
     int rand_angle = rand() % 2; //Случайным образом выбираем направление движения.
-
 
     for (int i = 0; i < n; i++) {//Проверяем, что все частицы лежат внутри параллелограмма.
 
@@ -57,25 +59,11 @@ int main()
             return 0; 
         }
     }
+    rand_angle = 1;
 
     if (rand_angle == 0) {//Если начинаем двигаться под углом 0 градусов к положительному направлению оси X.
 
-        for (int i = 0; i < n; i++)//Проверяем, что расстояние между центрами частиц еще до начала движения <2r.
-        {
-            for (int j = i + 1; j < n; j++) {
-
-                double distance_between_centers = sqrt(pow((vec[i].first - vec[j].first), 2)
-                    + pow((vec[i].second - vec[j].second), 2));
-
-                if (min(distance_between_centers, box_1 - distance_between_centers) < 2 * r) {
-                    cout << "The distance between the centers of particles " << i <<
-                    " and " << j << " < 2*r.";
-
-                    return 0;
-                }
-            }
-        }
-
+        
         while (Zero_distance_to_go > 0) {//Пока параметр полного смещения минус суммарный пройденный путь > 0.
 
             strnum = to_string(num);//Записываем координаты частиц в файл.
@@ -159,22 +147,7 @@ int main()
 
     if (rand_angle == 1) {//Если начинаем двигаться под углом 60 градусов к положительному направлению оси X.
 
-        for (int i = 0; i < n; i++)//Проверяем, что расстояние между центрами частиц еще до начала движения <2r.
-        {
-            for (int j = i + 1; j < n; j++) {
-
-                double distance_between_centers = sqrt(pow((vec[i].first - vec[j].first), 2)
-                + pow((vec[i].second - vec[j].second), 2));
-
-                if (min(distance_between_centers, box_2 - distance_between_centers) < 2 * r) {
-                    
-                    cout << "The distance between the centers of particles " << i <<
-                    " and " << j << "< 2*r.";
-
-                    return 0;
-                }
-            }
-        }
+     
 
         while (Zero_distance_to_go > 0) {//Пока параметр полного смещения минус суммарный пройденный путь > 0.
 
@@ -206,7 +179,7 @@ int main()
 
                 Distance_to_line = min(Distance_to_line, sqrt(3) * box_1 / 2 - Distance_to_line);
 
-                if (Distance_to_line < 2 * r) {//Если расстояние по оси y меньше 2-ух радиусов,то частицы предположительно могут столкнуться.
+                if (Distance_to_line < 2 * r) {//Если расстояние меньше 2-ух радиусов,то частицы предположительно могут столкнуться.
 
                     //Находим путь который пройдет частица до столкновения.
                     double dist = sqrt(pow(cur_particle_x - vec[i].first, 2) + pow(cur_particle_y - vec[i].second, 2) - pow(Distance_to_line, 2));
@@ -278,23 +251,3 @@ int main()
     system("python visualisation.py");
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
