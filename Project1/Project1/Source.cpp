@@ -37,12 +37,12 @@ int main()
         {7.5,4.5},{8.5,10.5},{12,10.5},{11.5,7},{8.,7.5},{11,4},{2.5,1},{10,9.5}
     };
 
-    double Zero_distance_to_go = 12;
+    double Zero_distance_to_go = 40;
 
     srand(time(0));
 
     int cur_particle = rand() % n;//Случайным образом выбираем частицу, которая будет двигаться (n - кол-во частиц).
-    cur_particle = 9;
+    //cur_particle = 9;
     double cur_particle_x = vec[cur_particle].first;
 
     double cur_particle_y = vec[cur_particle].second;//Записываем координаты частицы, которая будет двигаться. 
@@ -59,7 +59,7 @@ int main()
             return 0; 
         }
     }
-    rand_angle = 1;
+    //rand_angle = 1;
 
     if (rand_angle == 0) {//Если начинаем двигаться под углом 0 градусов к положительному направлению оси X.
 
@@ -251,3 +251,23 @@ int main()
     system("python visualisation.py");
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
